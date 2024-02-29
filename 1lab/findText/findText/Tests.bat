@@ -7,9 +7,7 @@ if %MyProgram% == "" (
 	exit /B 1
 )
 
-rem "$(ProjectDir)Tests.bat" "$(TargetPath)"
-
-REM Run with 0, 1, 3 arguments
+REM "$(ProjectDir)Tests.bat" "$(TargetPath)"
 
 echo Run with 0 arguments
 %MyProgram% >"%TEMP%\output.txt" && goto err 
@@ -27,13 +25,12 @@ echo Faild to open fail
 %MyProgram% test.txt "time" >"%TEMP%\output.txt" && goto err 
 echo Test 4 passed
 
-echo Find in empty file
-%MyProgram% test1.txt "world" >"%TEMP%\output.txt" 
-fc output1.txt "%TEMP%\output.txt" > nul || goto err
+echo Find empty string
+%MyProgram% input.txt "" >"%TEMP%\output.txt" && goto err 
 echo Test 5 passed
 
-echo Find empty string
-%MyProgram% input.txt "" >"%TEMP%\output.txt" 
+echo Find in empty file
+%MyProgram% test1.txt "world" >"%TEMP%\output.txt" 
 fc output1.txt "%TEMP%\output.txt" > nul || goto err
 echo Test 6 passed
 
@@ -55,7 +52,6 @@ echo Russian text not find
 %MyProgram% test3.txt "м€у" >"%TEMP%\output.txt" && goto err 
 echo Test 10 passed
 
-REM “есты прошли упешно
 echo All tests passed sucessfuly
 exit /B 0
 

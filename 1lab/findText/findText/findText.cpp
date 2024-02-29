@@ -38,6 +38,12 @@ bool IsStringInFile(const std::string& str, const std::string& inputFileName)
 		return false;
 	}
 
+	if (str.empty()) 
+	{
+		std::cout << "Search is empty\n";
+		return false;
+	}
+
 	if (!IsStringInStream(str, input))
 	{
 		std::cout << "Text not find\n";
