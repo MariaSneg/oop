@@ -1,2 +1,17 @@
 ﻿  findText.cpp
-  findText.vcxproj -> C:\Programming\oop\findText\x64\Debug\findText.exe
+  findText.vcxproj -> C:\Programming\oop\1lab\findText\x64\Debug\findText.exe
+  Текущая кодовая страница: 1251
+  Run with 0 arguments
+  Test 1 passed
+  Run with 1 arguments
+  Test 2 passed
+  Run with 3 arguments
+  Test 3 passed
+  Faild to open fail
+  Test 4 passed
+  Find in empty file
+  Test 5 passed
+  Find empty string
+  Test faild
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(160,5): error MSB3073: выход из команды ""C:\Programming\oop\1lab\findText\findText\Tests.bat" "C:\Programming\oop\1lab\findText\x64\Debug\findText.exe"
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(160,5): error MSB3073: :VCEnd" с кодом 1.

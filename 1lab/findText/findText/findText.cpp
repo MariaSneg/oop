@@ -3,39 +3,56 @@
 #include <optional>
 #include <string>
 
-using namespace std;
-
-struct Args {
-	string inputFileName;
-	string str;
+struct Args 
+{
+	std::string inputFileName;
+	std::string str;
 };
 
-void PrintIndexLine(int indexLine) {
-	cout << indexLine << endl;
-}
-
-bool FindStringInFile(ifstream& input, string str) {
-	string line;
+bool IsStringInStream(const std::string& str, std::ifstream& input) 
+{
+	std::string line;
 	bool found = false;
 
-	for (int indexLine = 1; getline(input, line); ++indexLine) {
-		cout << line << endl;
+	for (int indexLine = 1; getline(input, line); ++indexLine) 
+	{
 
 		auto position = line.find(str);
 
-		if (position != string::npos) {
+		if (position != std::string::npos) 
+		{
 			found = true;
-			PrintIndexLine(indexLine);
+			std::cout << indexLine << std::endl;
 		}
 	}
 	return found;
 }
 
-optional<Args> ParseArgs(int argc, char* argv[]) {
-	if (argc != 3) {
-		cout << "Invalid arguments count\n"
+bool IsStringInFile(const std::string& str, const std::string& inputFileName)
+{
+	std::ifstream input(inputFileName);
+
+	if (!input.is_open())
+	{
+		std::cout << "Failed to open " << inputFileName << " for reading\n";
+		return false;
+	}
+
+	if (!IsStringInStream(str, input))
+	{
+		std::cout << "Text not find\n";
+		return false;
+	}
+	return true;
+}
+
+std::optional<Args> ParseArgs(int argc, char* argv[]) 
+{
+	if (argc != 3) 
+	{
+		std::cout << "Invalid arguments count\n"
 			<< "Usage: findtext.exe <file name> <text to search>\n";
-		return nullopt;
+		return std::nullopt;
 	}
 	Args args;
 	args.inputFileName = argv[1];
@@ -51,18 +68,8 @@ int main(int argc, char* argv[])
 	{
 		return 1;
 	}
-
-	ifstream input(args->inputFileName);
-
-	if (!input.is_open())
+	if (!IsStringInFile(args->str, args->inputFileName))
 	{
-		cout << "Failed to open " << args->inputFileName << " for reading\n";
-		return 1;
-	}
-
-	if (!FindStringInFile(input, args->str))
-	{
-		cout << "Text not find\n";
 		return 1;
 	}
 
