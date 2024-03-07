@@ -2,6 +2,9 @@
 #include <fstream>
 #include <optional>
 #include <string>
+#include <functional>
+
+using FindStringCallback = std::function<void(int indexLine)>;
 
 struct Args 
 {
@@ -9,31 +12,47 @@ struct Args
 	std::string str;
 };
 
-bool IsStringInStream(const std::string& str, std::ifstream& input) 
+bool IsStringInStream(
+	const std::string& str, 
+	std::istream& input,
+	const FindStringCallback& callback = FindStringCallback())
 {
 	std::string line;
 	bool found = false;
 
+	//lineIndex
 	for (int indexLine = 1; getline(input, line); ++indexLine) 
 	{
-
 		auto position = line.find(str);
 
 		if (position != std::string::npos) 
 		{
 			found = true;
-			std::cout << indexLine << std::endl;
+			if (callback)
+			{
+				callback(indexLine);
+			}
 		}
 	}
+	//проверить после чтения файла проверить, в каком состоянии input (eof)
 	return found;
 }
 
-bool IsStringInFile(const std::string& str, const std::string& inputFileName)
+void PrintIndexLine(int indexLine) 
+{
+	std::cout << indexLine << std::endl;
+}
+
+bool IsStringInFile(
+	const std::string& str, 
+	const std::string& inputFileName,
+	const FindStringCallback& callback = FindStringCallback())
 {
 	std::ifstream input(inputFileName);
 
 	if (!input.is_open())
 	{
+		//использовать исключения для сигнала об ошибке вместо вывода
 		std::cout << "Failed to open " << inputFileName << " for reading\n";
 		return false;
 	}
@@ -44,9 +63,15 @@ bool IsStringInFile(const std::string& str, const std::string& inputFileName)
 		return false;
 	}
 
-	if (!IsStringInStream(str, input))
+	if (!IsStringInStream(str, input, callback))
 	{
 		std::cout << "Text not find\n";
+		return false;
+	}
+
+	if (!input.eof())
+	{
+		std::cout << "File is unread\n";
 		return false;
 	}
 	return true;
@@ -57,7 +82,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	if (argc != 3) 
 	{
 		std::cout << "Invalid arguments count\n"
-			<< "Usage: findtext.exe <file name> <text to search>\n";
+			<< "Usage: findtext.exe <file name> \"text to search\"\n";
 		return std::nullopt;
 	}
 	Args args;
@@ -74,7 +99,7 @@ int main(int argc, char* argv[])
 	{
 		return 1;
 	}
-	if (!IsStringInFile(args->str, args->inputFileName))
+	if (!IsStringInFile(args->str, args->inputFileName, PrintIndexLine))
 	{
 		return 1;
 	}
