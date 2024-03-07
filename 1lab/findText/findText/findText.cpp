@@ -12,7 +12,7 @@ struct Args
 	std::string str;
 };
 
-bool IsStringInStream(
+void stringInStream(
 	const std::string& str, 
 	std::istream& input,
 	const FindStringCallback& callback = FindStringCallback())
@@ -21,7 +21,7 @@ bool IsStringInStream(
 	bool found = false;
 
 	//lineIndex
-	for (int indexLine = 1; getline(input, line); ++indexLine) 
+	for (int lineIndex = 1; getline(input, line); ++lineIndex)
 	{
 		auto position = line.find(str);
 
@@ -30,20 +30,22 @@ bool IsStringInStream(
 			found = true;
 			if (callback)
 			{
-				callback(indexLine);
+				callback(lineIndex);
 			}
 		}
 	}
-	//проверить после чтения файла проверить, в каком состоянии input (eof)
-	return found;
+	if (!found)
+	{
+		throw std::runtime_error("Text not find\n");
+	}
 }
 
-void PrintIndexLine(int indexLine) 
+void PrintIndexLine(int lineIndex)
 {
-	std::cout << indexLine << std::endl;
+	std::cout << lineIndex << std::endl;
 }
 
-bool IsStringInFile(
+void stringInFile(
 	const std::string& str, 
 	const std::string& inputFileName,
 	const FindStringCallback& callback = FindStringCallback())
@@ -53,37 +55,27 @@ bool IsStringInFile(
 	if (!input.is_open())
 	{
 		//использовать исключения для сигнала об ошибке вместо вывода
-		std::cout << "Failed to open " << inputFileName << " for reading\n";
-		return false;
+		throw std::runtime_error("Failed to open " + inputFileName + " for reading\n");
 	}
 
 	if (str.empty()) 
 	{
-		std::cout << "Search is empty\n";
-		return false;
+		throw std::runtime_error("Search is empty\n");
 	}
 
-	if (!IsStringInStream(str, input, callback))
-	{
-		std::cout << "Text not find\n";
-		return false;
-	}
+	stringInStream(str, input, callback);
 
 	if (!input.eof())
 	{
-		std::cout << "File is unread\n";
-		return false;
+		throw std::runtime_error("Failed to read data\n");
 	}
-	return true;
 }
 
 std::optional<Args> ParseArgs(int argc, char* argv[]) 
 {
 	if (argc != 3) 
 	{
-		std::cout << "Invalid arguments count\n"
-			<< "Usage: findtext.exe <file name> \"text to search\"\n";
-		return std::nullopt;
+		throw std::runtime_error("Invalid arguments count\n Usage: findtext.exe <file name> \"text to search\"\n");
 	}
 	Args args;
 	args.inputFileName = argv[1];
@@ -94,13 +86,15 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
-	auto args = ParseArgs(argc, argv);
-	if (!args)
+
+	try
 	{
-		return 1;
+		auto args = ParseArgs(argc, argv);
+		stringInFile(args->str, args->inputFileName, PrintIndexLine);
 	}
-	if (!IsStringInFile(args->str, args->inputFileName, PrintIndexLine))
+	catch (const std::exception& e)
 	{
+		std::cout << e.what();
 		return 1;
 	}
 
