@@ -15,28 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="invert.cpp">
+    <ClCompile Include="VectorProcessing.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="empty.txt">
+    <ClCompile Include="MultiplyVectorElementsToMinElement.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt" />
-    <Text Include="determinate0.txt">
-      <Filter>Исходные файлы</Filter>
-    </Text>
-    <Text Include="output.txt">
-      <Filter>Исходные файлы</Filter>
-    </Text>
-    <Text Include="emptyOutput.txt">
-      <Filter>Исходные файлы</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="tests.bat">
-      <Filter>Исходные файлы</Filter>
-    </None>
+    <ClInclude Include="MultiplyVectorElementsToMinElement.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

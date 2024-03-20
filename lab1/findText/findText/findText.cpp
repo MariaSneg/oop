@@ -12,7 +12,7 @@ struct Args
 	std::string str;
 };
 
-void stringInStream(
+void StringInStream(
 	const std::string& str, 
 	std::istream& input,
 	const FindStringCallback& callback = FindStringCallback())
@@ -20,7 +20,6 @@ void stringInStream(
 	std::string line;
 	bool found = false;
 
-	//lineIndex
 	for (int lineIndex = 1; getline(input, line); ++lineIndex)
 	{
 		auto position = line.find(str);
@@ -39,13 +38,12 @@ void stringInStream(
 		throw std::runtime_error("Text not find\n");
 	}
 }
-
-void PrintIndexLine(int lineIndex)
+void PrintLineIndex(int lineIndex)
 {
 	std::cout << lineIndex << std::endl;
 }
 
-void stringInFile(
+void StringInFile(
 	const std::string& str, 
 	const std::string& inputFileName,
 	const FindStringCallback& callback = FindStringCallback())
@@ -54,7 +52,6 @@ void stringInFile(
 
 	if (!input.is_open())
 	{
-		//использовать исключения для сигнала об ошибке вместо вывода
 		throw std::runtime_error("Failed to open " + inputFileName + " for reading\n");
 	}
 
@@ -63,7 +60,7 @@ void stringInFile(
 		throw std::runtime_error("Search is empty\n");
 	}
 
-	stringInStream(str, input, callback);
+	StringInStream(str, input, callback);
 
 	if (!input.eof())
 	{
@@ -90,7 +87,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		auto args = ParseArgs(argc, argv);
-		stringInFile(args->str, args->inputFileName, PrintIndexLine);
+		StringInFile(args->str, args->inputFileName, PrintLineIndex);
 	}
 	catch (const std::exception& e)
 	{

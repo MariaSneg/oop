@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <functional>
+#include <array>
 
 using FindStringCallback = std::function<void(float(&matrix)[3][3])>;
 
@@ -14,6 +15,10 @@ struct Args
 	std::string inputFileName;
 	std::string str;
 };
+
+//использовать std::array для хранения 
+using Matrix3x3 = std::array<std::array<double, 3>, 3>;
+
 
 void PrintMatrix(float (&matrix)[n][m])
 {
@@ -30,9 +35,15 @@ void PrintMatrix(float (&matrix)[n][m])
 
 void ReadMatrix(std::istream& input, float(&matrix)[n][m]) 
 {
+	//
+	if (input.eof())
+	{
+		throw std::runtime_error("File is empty\n");
+	}
 	std::string temp1, temp2, temp3;
 	for (int i = 0; i < n; ++i)
 	{
+		// записывать сразу в элементы матрицы
 		input >> temp1 >> temp2 >> temp3;
 		matrix[i][0] = std::stof(temp1);
 		matrix[i][1] = std::stof(temp2);
@@ -94,7 +105,7 @@ void TransMatrix(float(&transMatrix)[n][m], const float(&matrix)[n][m])
 	}
 }
 
-int Determinate(const float(&matrix)[n][m])
+float Determinate(const float(&matrix)[n][m])
 {
 	float determinate = 0;
 	for (int i = 0; i < n; ++i)
@@ -112,7 +123,8 @@ int Determinate(const float(&matrix)[n][m])
 	return determinate;
 }
 
-bool IsMatrixInverted(
+//изменить название
+void IsMatrixInverted(
 	std::istream& input,
 	const FindStringCallback& callback = FindStringCallback())
 {
@@ -120,8 +132,6 @@ bool IsMatrixInverted(
 	ReadMatrix(input, matrix);
 
 	float determinate = Determinate(matrix);
-
-	std::cout << determinate << std::endl;
 
 	if (determinate == 0)
 	{
@@ -131,7 +141,8 @@ bool IsMatrixInverted(
 	float transposedMatrix[n][m];
 	TransMatrix(transposedMatrix, matrix);
 
-	PrintMatrix(transposedMatrix);
+	//функция не должна печатать трансп. матрицу
+	//PrintMatrix(transposedMatrix);
 
 	float invertedMatrix[n][m];
 
@@ -148,10 +159,10 @@ bool IsMatrixInverted(
 		callback(invertedMatrix);
 	}
 
-	return true;
+	return;
 }
 
-bool stringInFile(
+void MatrixInFile(
 	const std::string& inputFileName,
 	const FindStringCallback& callback = FindStringCallback())
 {
@@ -162,13 +173,13 @@ bool stringInFile(
 		throw std::runtime_error("Failed to open " + inputFileName + " for reading\n");
 	}
 
-	if (!IsMatrixInverted(input, PrintMatrix))
+	IsMatrixInverted(input, PrintMatrix);
+
+	if (!input.eof())
 	{
-		return false;
+		throw std::runtime_error("Failed to read data\n");
 	}
 
-
-	return true;
 }
 
 std::string ParseArgs(int argc, char* argv[])
@@ -187,7 +198,9 @@ int main(int argc, char* argv[])
 	try
 	{
 		std::string inputFileName = ParseArgs(argc, argv);
-		stringInFile(inputFileName, PrintMatrix);
+		//прочитать матрицу, инвертировать матрицу, напечатать матрицу - функции, вызываемые в main
+		//
+		MatrixInFile(inputFileName, PrintMatrix);
 	}
 	catch (const std::exception& e)
 	{
