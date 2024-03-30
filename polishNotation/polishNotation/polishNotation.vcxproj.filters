@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PrimeNumbers_tests.cpp">
+    <ClCompile Include="polishNotation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\PrimeNumbers\GeneratePrimeNumbersSet.cpp">
+    <ClCompile Include="polishNotationFunction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\PrimeNumbers\GeneratePrimeNumbersSet.h">
+    <ClInclude Include="polishNotationFunction.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

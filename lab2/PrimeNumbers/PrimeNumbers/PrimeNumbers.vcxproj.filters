@@ -18,12 +18,12 @@
     <ClCompile Include="PrimeNumbers.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratePrimeNumberSet.cpp">
+    <ClCompile Include="GeneratePrimeNumbersSet.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratePrimeNumberSet.h">
+    <ClInclude Include="GeneratePrimeNumbersSet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include "dictionaryFunctions.h"
 
-int main()
+int main(int argc, char* argv[])
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -15,9 +15,10 @@ int main()
 
 	try
 	{
-		std::map<std::string, std::string> dictionary = ParseDictionary("dictionary.txt");
+		auto dictionaryFileName = ParseArgs(argc, argv);
+		std::map<std::string, std::string> dictionary = ParseDictionary("input.txt");
 
-		while (std::cin >> data)
+		while (getline(std::cin, data))
 		{
 			if (data == "...")
 			{
@@ -33,13 +34,11 @@ int main()
 					}
 					else
 					{
-						SaveChanges(dictionary, "dictionary.txt");
+						SaveChanges(dictionary, "input.txt");
 					}
 				}
 				break;
 			}
-
-			data = ToLower(data);
 
 			std::string translateWord = TranslateWord(data, dictionary, isChanged);
 

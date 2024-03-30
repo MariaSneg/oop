@@ -1,6 +1,6 @@
-ball:м€ч
-cat:кошка
 dog:собака
+cat:кот, кошка
+car:машина
+ball:м€ч
 meat:м€со
-tea:чай
 the red square: расна€ ѕлощадь

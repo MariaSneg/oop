@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="changedDictionary.txt" />
+    <Text Include="dictionary.txt" />
     <Text Include="notEmptyDictionary.txt" />
     <Text Include="empty.txt" />
   </ItemGroup>

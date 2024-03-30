@@ -31,5 +31,6 @@
     <Text Include="dictionary.txt">
       <Filter>Исходные файлы</Filter>
     </Text>
+    <Text Include="input.txt" />
   </ItemGroup>
 </Project>

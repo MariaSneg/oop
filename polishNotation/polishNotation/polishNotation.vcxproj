@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0db45d48-81f0-45c7-ac0e-7b734887c23a}</ProjectGuid>
-    <RootNamespace>PrimeNumberstests</RootNamespace>
+    <ProjectGuid>{a47aa641-6e9d-4759-8261-f6246ca87097}</ProjectGuid>
+    <RootNamespace>polishNotation</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\PrimeNumbers\GeneratePrimeNumbersSet.cpp" />
-    <ClCompile Include="PrimeNumbers_tests.cpp" />
+    <ClCompile Include="polishNotation.cpp" />
+    <ClCompile Include="polishNotationFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\PrimeNumbers\GeneratePrimeNumbersSet.h" />
+    <ClInclude Include="polishNotationFunction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

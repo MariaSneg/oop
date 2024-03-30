@@ -21,8 +21,16 @@ SCENARIO("Read Vector")
 	{
 		THEN("Map contains some pairs")
 		{
-			std::map<std::string, std::string> dictionary = ParseDictionary("notEmptyDictionary.txt");
-			CHECK(dictionary.size() == 5);
+			std::map<std::string, std::string> dictionary
+			{
+				{"dog", "собака"},
+				{ "cat",  "кот, кошка" },
+				{ "car",  "машина" },
+				{ "ball",  "мяч" },
+				{ "meat",  "мясо" }
+			};
+			std::map<std::string, std::string> readDictionary = ParseDictionary("notEmptyDictionary.txt");
+			CHECK(dictionary == readDictionary);
 		}
 	}
 }
@@ -45,19 +53,47 @@ SCENARIO("Save changes to dictionary")
 	}
 }
 
+SCENARIO("Low case word")
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	WHEN("We enter \"DOG\"")
+	{
+		THEN("We get \"dog\"")
+		{
+			std::string upCaseWord = "DOG";
+			std::string lowCaseWord = ToLower(upCaseWord);
+			CHECK(lowCaseWord == "dog");
+		}
+	}
+}
+
 SCENARIO("Translate word")
 {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	WHEN("We enter \"dog\"")
 	{
 		THEN("We get translation \"собака\"")
 		{
-			setlocale(LC_ALL, "Russian");
 			std::string data = "dog";
 			bool isChanged = false;
-			std::map<std::string, std::string> dictionary = ParseDictionary("notEmptyDictionary.txt");
+			std::map<std::string, std::string> dictionary = ParseDictionary("dictionary.txt");
 			std::string translateWord = TranslateWord(data, dictionary, isChanged);
 
 			CHECK(translateWord == "собака");
+		}
+	}
+	WHEN("We enter phrase \"The Red Square\"")
+	{
+		THEN("We get translation \"Красная Площадь\"")
+		{
+			std::string data = "The Red Square";
+			bool isChanged = false;
+			std::map<std::string, std::string> dictionary = ParseDictionary("dictionary.txt");
+			std::string translateWord = TranslateWord(data, dictionary, isChanged);
+
+			CHECK(translateWord == "Красная Площадь");
 		}
 	}
 }

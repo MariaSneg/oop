@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <chrono>
-#include "GeneratePrimeNumberSet.h"
+#include "GeneratePrimeNumbersSet.h"
 
 int main()
 {
@@ -9,7 +9,9 @@ int main()
 
     auto startTime = std::chrono::steady_clock::now();
 
-    std::set<int> primeNumbers = GeneratePrimeNumberSet(upperBound);
+    std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
+
+    //с помощью copy
 
     for (int i : primeNumbers)
     {

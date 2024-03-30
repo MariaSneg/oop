@@ -3,7 +3,18 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <optional>
 #include "dictionaryFunctions.h"
+
+std::optional<std::string> ParseArgs(int argc, char* argv[])
+{
+	if (argc != 2)
+	{
+		throw std::runtime_error("Invalid arguments count\n Usage: findtext.exe <file name> \"text to search\"\n");
+	}
+	std::string inputFileName = argv[1];
+	return inputFileName;
+}
 
 std::string ToLower(std::string const& str)
 {
@@ -56,8 +67,9 @@ void AddNewWord(std::string const& word, std::map<std::string, std::string>& dic
 	}
 }
 
-std::string TranslateWord(std::string const& word, std::map<std::string, std::string>& dictionary, bool& isChanged)
+std::string TranslateWord(std::string& word, std::map<std::string, std::string>& dictionary, bool& isChanged)
 {
+	word = ToLower(word);
 	if (dictionary.count(word))
 	{
 		return dictionary[word];
