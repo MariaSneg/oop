@@ -30,11 +30,17 @@ std::map<std::string, std::string> ParseDictionary(std::string const& fileName)
 {
 	std::ifstream input(fileName);
 
+	std::map<std::string, std::string> dictionary;
+
+	if (!input)
+	{
+		return dictionary;
+	}
 	if (!input.is_open())
 	{
 		throw std::runtime_error("Failed to open dictionary.txt for reading\n");
 	}
-	std::map<std::string, std::string> dictionary;
+	
 	std::string data;
 	while (getline(input, data))
 	{
@@ -54,6 +60,8 @@ void AddNewWord(std::string const& word, std::map<std::string, std::string>& dic
 	std::cout << "Неизвестное слово \"" + word + "\". Введите перевод или пустую строку для игнорирования" << std::endl;
 	std::cin.ignore();
 	getline(std::cin, translate);
+
+	std::cout << translate;
 
 	if (!translate.empty())
 	{
@@ -83,7 +91,7 @@ std::string TranslateWord(std::string& word, std::map<std::string, std::string>&
 
 void SaveChanges(std::map<std::string, std::string>& dictionary, std::string const& fileName)
 {
-	std::ofstream output(fileName);
+	std::ofstream output("d.txt");
 
 	if (!output.is_open())
 	{

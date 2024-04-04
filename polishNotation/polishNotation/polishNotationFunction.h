@@ -2,4 +2,4 @@
 #include <iostream>
 #include <string>
 
-int PolishNotation(std::istream& input);
+int PolishNotation(std::istringstream& iss);

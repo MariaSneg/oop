@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <Windows.h>
+#include <optional>
 #include "dictionaryFunctions.h"
 
 int main(int argc, char* argv[])
@@ -16,7 +17,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		auto dictionaryFileName = ParseArgs(argc, argv);
-		std::map<std::string, std::string> dictionary = ParseDictionary("input.txt");
+		std::map<std::string, std::string> dictionary = ParseDictionary(dictionaryFileName.value());
 
 		while (getline(std::cin, data))
 		{
@@ -34,7 +35,7 @@ int main(int argc, char* argv[])
 					}
 					else
 					{
-						SaveChanges(dictionary, "input.txt");
+						SaveChanges(dictionary, dictionaryFileName.value());
 					}
 				}
 				break;
