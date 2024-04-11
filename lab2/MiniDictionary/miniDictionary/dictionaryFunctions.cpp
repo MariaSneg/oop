@@ -58,7 +58,7 @@ void AddNewWord(std::string const& word, std::map<std::string, std::string>& dic
 {
 	std::string translate;
 	std::cout << "Неизвестное слово \"" + word + "\". Введите перевод или пустую строку для игнорирования" << std::endl;
-	std::cin.ignore();
+	//std::cin.ignore();
 	getline(std::cin, translate);
 
 	std::cout << translate;
