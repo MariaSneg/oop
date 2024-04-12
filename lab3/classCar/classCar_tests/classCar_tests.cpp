@@ -236,7 +236,7 @@ TEST_CASE_METHOD(CarMovingBackwardFixture, "Change gear of moving backward car")
 	{
 		car.SetGear(1);
 
-		THEN("Gear still -1")
+		THEN("Car still has gear -1")
 		{
 			CHECK(car.GetGear() == -1);
 		}
@@ -250,7 +250,7 @@ TEST_CASE_METHOD(CarMovingBackwardFixture, "Change gear of moving backward car")
 			CHECK(car.GetGear() == 0);
 		}
 	}
-	WHEN("Car has speed 0 ")
+	WHEN("Car has speed 0, shift to gear 1")
 	{
 		car.SetSpeed(0);
 		car.SetGear(1);
@@ -258,6 +258,36 @@ TEST_CASE_METHOD(CarMovingBackwardFixture, "Change gear of moving backward car")
 		THEN("Car has gear 1")
 		{
 			CHECK(car.GetGear() == 1);
+		}
+	}
+	WHEN("Car has speed 0, shift to gear 2")
+	{
+		car.SetSpeed(0);
+		car.SetGear(2);
+
+		THEN("Car still has gear -1")
+		{
+			CHECK(car.GetGear() == -1);
+		}
+	}
+	WHEN("Car has speed 15, shift to gear 0, then to 1")
+	{
+		car.SetGear(0);
+		car.SetGear(1);
+
+		THEN("Car still has gear 0")
+		{
+			CHECK(car.GetGear() == 0);
+		}
+	}
+	WHEN("Car has speed 15, shift to gear 0, then to -1")
+	{
+		car.SetGear(0);
+		car.SetGear(-1);
+
+		THEN("Car still has gear 0")
+		{
+			CHECK(car.GetGear() == 0);
 		}
 	}
 }

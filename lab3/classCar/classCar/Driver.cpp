@@ -35,6 +35,8 @@ bool CDriver::HandleCommand()
 		return true;
 	}
 
+	std::cout << "Unknown command!" << std::endl;
+
 	return false;
 }
 
@@ -62,7 +64,6 @@ bool CDriver::SetGear(std::istream& args)
 	args >> gear;
 	if (m_car.SetGear(gear))
 	{
-		m_car.SetDirection();
 		m_output << "Gear changed to " << gear << std::endl;
 		return true;
 	}
@@ -76,7 +77,6 @@ bool CDriver::SetSpeed(std::istream& args)
 	args >> speed;
 	if (m_car.SetSpeed(speed))
 	{
-		m_car.SetDirection();
 		m_output << "speed changed to " << speed << std::endl;
 		return true;
 	}

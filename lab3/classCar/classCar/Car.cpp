@@ -11,30 +11,30 @@ std::map<int, std::pair<int, int>> Gears
     { 5, std::make_pair(50, 150) }
 };
 
-bool Car::IsTurnedOn()
+const bool Car::IsTurnedOn()
 {
     return m_engineCondition;
 }
 
-std::string Car::GetDirection()
+const std::string Car::GetDirection()
 {
     std::string direction;
-    if (m_direction == Direction::Forward)
+    if (m_speed < 0)
     {
         direction = "Forward";
     }
-    else if (m_direction == Direction::Backward)
+    else if (m_speed > 0)
     {
         direction = "Backward";
     }
-    else if (m_direction == Direction::Standing)
+    else 
     {
         direction = "Standing";
     }
     return direction;
 }
 
-int Car::GetSpeed()
+const int Car::GetSpeed()
 {
     if (m_speed < 0)
     {
@@ -43,7 +43,7 @@ int Car::GetSpeed()
     return m_speed;
 }
 
-int Car::GetGear()
+const int Car::GetGear()
 {
     return m_gear;
 }
@@ -82,12 +82,12 @@ bool Car::SetGear(int gear)
     {
         return false;
     }
-    if (gear == 0 && m_speed == 0)
+    /*if (gear == 0 && m_speed == 0)
     {
         m_gear = gear;
         return true;
-    }
-    else if (gear == -1 && m_speed == 0)
+    }*/
+    if (gear == -1 && m_speed == 0)
     {
         m_gear = gear;
         return true;
@@ -97,7 +97,7 @@ bool Car::SetGear(int gear)
         m_gear = gear;
         return true;
     }
-    else if (m_speed >= Gears[gear].first && m_speed <= Gears[gear].second) {
+    else if (m_speed >= Gears[gear].first && m_speed <= Gears[gear].second && gear != -1) {
         m_gear = gear;
         return true;
     }
@@ -123,13 +123,10 @@ bool Car::SetSpeed(int speed)
     }
     else if (m_gear == 0)
     {
-        if (m_direction == Direction::Backward)
+        if (m_speed < 0 && speed <= -m_speed)
         {
-            if (speed <= -m_speed)
-            {
-                m_speed = -speed;
-                return true;
-            }
+            m_speed = -speed;
+            return true;
         }
         else if (speed <= m_speed)
         {
@@ -140,26 +137,6 @@ bool Car::SetSpeed(int speed)
     else if (speed >= Gears[m_gear].first && speed <= Gears[m_gear].second)
     {
         m_speed = speed;
-        return true;
-    }
-    return false;
-}
-
-bool Car::SetDirection()
-{
-    if (m_speed == 0)
-    {
-        m_direction = Direction::Standing;
-        return true;
-    }
-    if (m_speed < 0)
-    {
-        m_direction = Direction::Backward;
-        return true;
-    }
-    else 
-    {
-        m_direction = Direction::Forward;
         return true;
     }
     return false;
