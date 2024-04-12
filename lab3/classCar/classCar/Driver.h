@@ -6,10 +6,10 @@
 
 class Car;
 
-class CRemoteControl
+class CDriver
 {
 public:
-	CRemoteControl(Car& tv, std::istream& input, std::ostream& output);
+	CDriver(Car& car, std::istream& input, std::ostream& output);
 	bool HandleCommand();
 private:
 	bool Info(std::istream& args);

@@ -21,7 +21,7 @@
     <ClCompile Include="Car.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="RemoteControl.cpp">
+    <ClCompile Include="Driver.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="Car.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="RemoteControl.h">
+    <ClInclude Include="Driver.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

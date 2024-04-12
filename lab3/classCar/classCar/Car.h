@@ -8,10 +8,13 @@ enum class Direction {
 	Forward, Backward, Standing
 };
 
+//сделать методы, не изменяющие состояние, константными
+
 class Car
 {
 public:
 	bool IsTurnedOn();
+	//возвращать enum, преобразовывать при выводе
 	std::string GetDirection();
 	int GetSpeed();
 	int GetGear();
@@ -22,6 +25,7 @@ public:
 	bool SetDirection();
 private:
 	bool m_engineCondition = false;
+	//убрать m_direction
 	Direction m_direction = Direction::Standing;
 	int m_speed = 0;
 	int m_gear = 0;

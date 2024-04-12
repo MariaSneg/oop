@@ -36,6 +36,10 @@ std::string Car::GetDirection()
 
 int Car::GetSpeed()
 {
+    if (m_speed < 0)
+    {
+        return -m_speed;
+    }
     return m_speed;
 }
 
@@ -70,30 +74,32 @@ bool Car::TurnOffEngine()
 
 bool Car::SetGear(int gear)
 {
-    if (Gears.find(gear) != Gears.end())
+    if (!m_engineCondition)
     {
-        if (gear == -1)
-        {
-            if (m_speed == 0)
-            {
-                m_gear = gear;
-                return true;
-            }
-            return false;
-        }
-        if (m_gear == -1)
-        {
-            if (m_speed == 0)
-            {
-                m_gear = gear;
-                return true;
-            }
-            return false;
-        }
-        if (m_speed >= Gears[gear].first && m_speed <= Gears[gear].second) {
-            m_gear = gear;
-            return true;
-        }
+        return false;
+    }
+    if (Gears.find(gear) == Gears.end())
+    {
+        return false;
+    }
+    if (gear == 0 && m_speed == 0)
+    {
+        m_gear = gear;
+        return true;
+    }
+    else if (gear == -1 && m_speed == 0)
+    {
+        m_gear = gear;
+        return true;
+    }
+    else if (gear == 0)
+    {
+        m_gear = gear;
+        return true;
+    }
+    else if (m_speed >= Gears[gear].first && m_speed <= Gears[gear].second) {
+        m_gear = gear;
+        return true;
     }
     
     return false;
@@ -101,19 +107,33 @@ bool Car::SetGear(int gear)
 
 bool Car::SetSpeed(int speed)
 {
-    if (m_gear == -1)
+    if (speed < 0)
     {
-        if (-speed >= Gears[m_gear].first && -speed <= Gears[m_gear].second)
-        {
-            m_speed = -speed;
-            return true;
-        }
+        return false;
+    }
+    if (!m_engineCondition)
+    {
+        return false;
+    }
+
+    if (m_gear == -1 && -speed >= Gears[m_gear].first && -speed <= Gears[m_gear].second)
+    {
+        m_speed = -speed;
+        return true;
     }
     else if (m_gear == 0)
     {
-        if (speed <= m_speed)
+        if (m_direction == Direction::Backward)
         {
-            m_speed = -speed;
+            if (speed <= -m_speed)
+            {
+                m_speed = -speed;
+                return true;
+            }
+        }
+        else if (speed <= m_speed)
+        {
+            m_speed = speed;
             return true;
         }
     }
@@ -132,7 +152,7 @@ bool Car::SetDirection()
         m_direction = Direction::Standing;
         return true;
     }
-    if (m_gear == -1)
+    if (m_speed < 0)
     {
         m_direction = Direction::Backward;
         return true;
@@ -142,4 +162,5 @@ bool Car::SetDirection()
         m_direction = Direction::Forward;
         return true;
     }
+    return false;
 }
