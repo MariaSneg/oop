@@ -1,29 +1,29 @@
 #include "Car.h"
 
-std::map<int, std::pair<int, int>> Gears
+const std::map<int, std::pair<int, int>> Gears
 {
     { -1, std::make_pair(-20, 0)},
-    { 0, std::make_pair(0, 0) },
-    { 1, std::make_pair(0, 30) },
-    { 2, std::make_pair(20, 50) },
-    { 3, std::make_pair(30, 60) },
-    { 4, std::make_pair(40, 90) },
-    { 5, std::make_pair(50, 150) }
+    { 0, std::make_pair(0, 0)},
+    { 1, std::make_pair(0, 30)},
+    { 2, std::make_pair(20, 50)},
+    { 3, std::make_pair(30, 60)},
+    { 4, std::make_pair(40, 90)},
+    { 5, std::make_pair(50, 150)}
 };
 
-const bool Car::IsTurnedOn()
+bool Car::IsTurnedOn() const
 {
     return m_engineCondition;
 }
 
-const std::string Car::GetDirection()
+std::string Car::GetDirection() const
 {
     std::string direction;
-    if (m_speed < 0)
+    if (m_speed > 0)
     {
         direction = "Forward";
     }
-    else if (m_speed > 0)
+    else if (m_speed < 0)
     {
         direction = "Backward";
     }
@@ -34,7 +34,7 @@ const std::string Car::GetDirection()
     return direction;
 }
 
-const int Car::GetSpeed()
+int Car::GetSpeed() const
 {
     if (m_speed < 0)
     {
@@ -43,7 +43,7 @@ const int Car::GetSpeed()
     return m_speed;
 }
 
-const int Car::GetGear()
+int Car::GetGear() const
 {
     return m_gear;
 }
@@ -82,11 +82,6 @@ bool Car::SetGear(int gear)
     {
         return false;
     }
-    /*if (gear == 0 && m_speed == 0)
-    {
-        m_gear = gear;
-        return true;
-    }*/
     if (gear == -1 && m_speed == 0)
     {
         m_gear = gear;
@@ -97,7 +92,7 @@ bool Car::SetGear(int gear)
         m_gear = gear;
         return true;
     }
-    else if (m_speed >= Gears[gear].first && m_speed <= Gears[gear].second && gear != -1) {
+    else if (m_speed >= Gears.at(gear).first && m_speed <= Gears.at(gear).second && gear != -1) {
         m_gear = gear;
         return true;
     }
@@ -116,7 +111,7 @@ bool Car::SetSpeed(int speed)
         return false;
     }
 
-    if (m_gear == -1 && -speed >= Gears[m_gear].first && -speed <= Gears[m_gear].second)
+    if (m_gear == -1 && -speed >= Gears.at(m_gear).first && -speed <= Gears.at(m_gear).second)
     {
         m_speed = -speed;
         return true;
@@ -133,8 +128,9 @@ bool Car::SetSpeed(int speed)
             m_speed = speed;
             return true;
         }
+        //не использовать квадратные скобки
     }
-    else if (speed >= Gears[m_gear].first && speed <= Gears[m_gear].second)
+    else if (speed >= Gears.at(m_gear).first && speed <= Gears.at(m_gear).second)
     {
         m_speed = speed;
         return true;

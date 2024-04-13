@@ -16,7 +16,7 @@ CDriver::CDriver(Car& car, std::istream& input, std::ostream& output)
 {
 }
 
-bool CDriver::HandleCommand()
+bool CDriver::HandleCommand() const
 {
 	std::string commandLine;
 	getline(m_input, commandLine);
@@ -40,14 +40,14 @@ bool CDriver::HandleCommand()
 	return false;
 }
 
-bool CDriver::EngineOn(std::istream& args)
+bool CDriver::EngineOn(std::istream& args) const
 {
 	m_car.TurnOnEngine();
 	m_output << "Engine is turned on" << std::endl;
 	return true;
 }
 
-bool CDriver::EngineOff(std::istream& args)
+bool CDriver::EngineOff(std::istream& args) const
 {
 	if (m_car.TurnOffEngine())
 	{
@@ -58,7 +58,7 @@ bool CDriver::EngineOff(std::istream& args)
 	return false;
 }
 
-bool CDriver::SetGear(std::istream& args)
+bool CDriver::SetGear(std::istream& args) const
 {
 	int gear;
 	args >> gear;
@@ -71,7 +71,7 @@ bool CDriver::SetGear(std::istream& args)
 	return false;
 }
 
-bool CDriver::SetSpeed(std::istream& args)
+bool CDriver::SetSpeed(std::istream& args) const
 {
 	int speed;
 	args >> speed;
@@ -84,7 +84,7 @@ bool CDriver::SetSpeed(std::istream& args)
 	return false;
 }
 
-bool CDriver::Info(std::istream& args)
+bool CDriver::Info(std::istream& args) const
 {
 	std::string info = (m_car.IsTurnedOn())
 		? ("Engine is turn on\nGear is: " + std::to_string(m_car.GetGear()) + "\nSpeed is: "  + std::to_string(m_car.GetSpeed()) + "\n" + m_car.GetDirection() + "\n")
