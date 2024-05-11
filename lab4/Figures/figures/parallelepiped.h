@@ -4,7 +4,8 @@
 class CParallelepiped final : public CBody
 {
 public:
-	CParallelepiped(double density, double width, double height, double depth);
+	CParallelepiped(std::istream& in, std::ostream& out, double density, double width, double height, double depth);
+	CParallelepiped(std::istream& in, std::ostream& out);
 
 	double GetWidth() const;
 	double GetHeight() const;
@@ -13,7 +14,7 @@ public:
 
 private:
 	void AppendProperties(std::ostream& strm) const override;
-	void AddProperties(std::istream& in, std::ostream& out) override;
+	void AddProperties() override;
 	double m_width;
 	double m_height;
 	double m_depth;

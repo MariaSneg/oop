@@ -2,45 +2,32 @@
 #include "parallelepiped.h"
 #include "cone.h"
 #include "cylinder.h"
-#include <vector>
-#include <memory>
+#include "compound.h"
+#include "bodiesHandler.h"
+#include <string>
 #include <iostream>
-
-void AddSphere(std::vector<std::unique_ptr<CBody>>& bodies)
-{
-	auto s = std::make_unique<CSphere>(1000.0, 1.0);
-	bodies.push_back(std::move(s));
-}
-
-void AddParallelepiped(std::vector<std::unique_ptr<CBody>>& bodies)
-{
-	auto s = std::make_unique<CParallelepiped>(100.0, 10.0, 10.0, 10.0);
-	bodies.push_back(std::move(s));
-}
-
-void AddCone(std::vector<std::unique_ptr<CBody>>& bodies)
-{
-	auto s = std::make_unique<CCone>(100.0, 100.0, 10.0);
-	bodies.push_back(std::move(s));
-}
-
-void AddCylinder(std::vector<std::unique_ptr<CBody>>& bodies)
-{
-	auto s = std::make_unique<CCylinder>(100.0, 100.0, 10.0);
-	bodies.push_back(std::move(s));
-}
-
+#include <iomanip>
 
 int main()
 {
-	std::vector<std::unique_ptr<CBody>> bodies;
-	AddSphere(bodies);
-	AddParallelepiped(bodies);
-	AddCone(bodies);
-	AddCylinder(bodies);
-	std::cout << bodies[0]->ToString() << std::endl;
-	std::cout << bodies[1]->ToString() << std::endl;
-	std::cout << bodies[2]->ToString() << std::endl;
-	std::cout << bodies[3]->ToString() << std::endl;
+	std::cout << "Enter bodies. To exit enter \"...\"" << std::endl;
+	
+	CBodiesHandler handler(std::cin, std::cout);
+	std::string body;
+	while (std::cin >> body)
+	{
+		if (body == "...")
+		{
+			break;
+		}
+		handler.HandleBody(body);
+        
+        std::cout << "Next:" << std::endl;
+	}
+
+	handler.PrintBodies();
+
+    std::cout << "Min mass in water:" << std::setprecision(10) << handler.MinMassInWater() << std::endl
+        << "Max mass:" << handler.MaxMass() << std::endl;
 	return 0;
 }

@@ -131,7 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bodiesHandler.cpp" />
     <ClCompile Include="body.cpp" />
+    <ClCompile Include="compound.cpp" />
     <ClCompile Include="cone.cpp" />
     <ClCompile Include="cylinder.cpp" />
     <ClCompile Include="figures.cpp" />
@@ -139,7 +141,9 @@
     <ClCompile Include="sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bodiesHandler.h" />
     <ClInclude Include="body.h" />
+    <ClInclude Include="compound.h" />
     <ClInclude Include="cone.h" />
     <ClInclude Include="cylinder.h" />
     <ClInclude Include="parallelepiped.h" />

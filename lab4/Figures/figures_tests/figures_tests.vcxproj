@@ -81,6 +81,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -97,6 +100,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -109,6 +115,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -125,9 +134,28 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\figures\bodiesHandler.cpp" />
+    <ClCompile Include="..\figures\body.cpp" />
+    <ClCompile Include="..\figures\compound.cpp" />
+    <ClCompile Include="..\figures\cone.cpp" />
+    <ClCompile Include="..\figures\cylinder.cpp" />
+    <ClCompile Include="..\figures\parallelepiped.cpp" />
+    <ClCompile Include="..\figures\sphere.cpp" />
     <ClCompile Include="figures_tests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\figures\bodiesHandler.h" />
+    <ClInclude Include="..\figures\body.h" />
+    <ClInclude Include="..\figures\compound.h" />
+    <ClInclude Include="..\figures\cone.h" />
+    <ClInclude Include="..\figures\cylinder.h" />
+    <ClInclude Include="..\figures\parallelepiped.h" />
+    <ClInclude Include="..\figures\sphere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

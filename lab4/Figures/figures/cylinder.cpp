@@ -3,10 +3,15 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-CCylinder::CCylinder(double density, double baseRadius, double height)
-	: CBody("Cylinder", density)
+CCylinder::CCylinder(std::istream& in, std::ostream& out, double density, double baseRadius, double height)
+	: CBody("Cylinder", density, in, out)
 	, m_baseRadius(baseRadius)
 	, m_height(height)
+{
+}
+
+CCylinder::CCylinder(std::istream& in, std::ostream& out)
+	: CBody("Cylinder", in, out)
 {
 }
 
@@ -31,8 +36,19 @@ void CCylinder::AppendProperties(std::ostream& strm) const
 		<< "\theight = " << GetHeight() << std::endl;
 }
 
-void CCylinder::AddProperties(std::istream& in, std::ostream& out)
+void CCylinder::AddProperties()
 {
-	out << "Enter the base radius and height of the cylinder" << std::endl;
-	in >> m_baseRadius >> m_height;
+	while (true) {
+		m_output << "Enter the base radius and height of the cylinder" << std::endl;
+		if (!(m_input >> m_baseRadius >> m_height))
+		{
+			m_output << "Please enter a positive number." << std::endl;
+		}
+		else if (m_baseRadius > 0 && m_height > 0) {
+			break;
+		}
+		else {
+			m_output << "Please enter a positive number." << std::endl;
+		}
+	}
 }
